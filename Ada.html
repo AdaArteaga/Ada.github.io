@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kolker+Brush&family=Signika+Negative&family=Xanh+Mono&family=Yanone+Kaffeesatz:wght@500&display=swap" rel="stylesheet">
+  <title>Anna Dowlin</title>
+  <style>
+    body { 
+
+      text-align: center;
+      background: url("https://welovedoodles.com/wp-content/uploads/2021/01/German-Shepherd-Breeders-in-New-York.jpg");
+      background-size: cover;
+      background-position: center;
+      color: red;
+      font-family: 'Kolker Brush', cursive;
+    }
+    p {
+      font-size: 50px; 
+      
+    }
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 18px;
+    }
+    input[type="submit"] {
+      background: brown;
+      color: red;
+    }
+    img {
+      width: 200px;
+      border-radius: 50px;
+      }
+  </style>
+</head>
+<body>
+  <img src="https://res.cloudinary.com/teepublic/image/private/s--90ogrAEh--/t_Resized%20Artwork/c_fit,g_north_west,h_1054,w_1054/co_ffffff,e_outline:53/co_ffffff,e_outline:inner_fill:53/co_bbbbbb,e_outline:3:1000/c_mpad,g_center,h_1260,w_1260/b_rgb:eeeeee/t_watermark_lock/c_limit,f_auto,h_630,q_90,w_630/v1623106552/production/designs/22396896_0.jpg">
+  <p>Hi! German shepherd Dog breeder. Say hello!</p>
+   <input id="Name" placeholder="Your name">
+  <input id="Email" type="email" placeholder="Your email">
+  <input id="submit" type="submit"> 
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-app.js";
+	import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.14.0/firebase-database.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBemYujrJkdIVVBRo43l47FU8y6SX4SpeI",
+      authDomain: "ada-s-project-fc4a7.firebaseapp.com",
+      projectId: "ada-s-project-fc4a7",
+      storageBucket: "ada-s-project-fc4a7.appspot.com",
+      messagingSenderId: "759583013253",
+      appId: "1:759583013253:web:bd02106a23c32a29f36cec"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig); 
+	
+	const db = getDatabase(app);
+	const Name = document.querySelector("#Name") 
+	const Email = document.querySelector("#Email")
+	document.querySelector('#submit').addEventListener('click', Submit)
+	
+	
+	function Submit() {
+		  const timestamp = buildTimestamp()
+	  
+		  set(ref(db, timestamp), {
+			  Name: Name.value,
+		      email: Email.value,
+		  });
+
+		  Name.value = ""
+		  Email.value = ""
+		}
+	
+	function buildTimestamp() {
+		  const now = new Date();
+		  let timestamp = now.getFullYear().toString() + "/";
+		  //const month = now.toLocaleString('default', { month: 'long' });
+
+		  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+		  month = month.toString()
+		  month = addLeadingZero(month)
+		  timestamp += month + "/"; 
+
+		  let date = now.getDate().toString()
+		  date = addLeadingZero(date)
+		  timestamp += date + "/";
+
+		  let hours = now.getHours().toString()
+		  hours = addLeadingZero(hours)
+		  timestamp += hours + ":";
+
+		  let minutes = now.getMinutes().toString()
+		  minutes = addLeadingZero(minutes)
+		  timestamp += minutes + ":";
+
+		  let seconds = now.getSeconds().toString()
+		  seconds = addLeadingZero(seconds)
+		  timestamp += seconds;
+
+		  return timestamp
+		}
+
+	function addLeadingZero(units) {
+		if (units.length < 2) {
+			units = "0" + units
+		}
+		return units
+	}
+	
+	
+  </script>
+</body>
